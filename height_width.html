@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.box1 {
+ 			width: 200px;
+			height: 200px;
+			background-color: red;
+		}
+   .parent{
+  width: 400px;
+  height: 200px;
+  background: lightgray;
+}
+
+    .box2{
+  width: 50%;
+  height: 50%;
+  background: blue;
+}
+		.box3 {
+	width: 50%;
+	height: 50%;
+	background-color: green;
+		}
+		.box3{
+  width: auto;
+  height: auto;
+  background: yellow;
+}
+  .parent2{
+  width: 300px;
+  height: 150px;
+  background: gray;
+}
+
+  .box4{
+  width: inherit;
+  height: inherit;
+  background: green;
+}
+  .circle{
+  width: 150px;
+  height: 150px;
+  background: orange;
+  border-radius: 50%;
+}
+p {
+	background-color: blue;
+	color: rgb(105, 34, 29);
+}
+	</style>
+</head>
+<body>
+	<div class="box1">box 1</div>
+	<div class="parent">
+  <div class="box2">Box 2</div>
+	
+<div class="box3">
+  Bu matn uzun bo‘lsa div ham kattalashadi
+</div>
+<div class="parent2">
+  <div class="box4">Box 4</div>
+</div>
+<div class="circle"></div>
+<p style="color: red;">
+	height va width xususiyatlari elementning balandligi va kengligini belgilaydi. Balandlik va kenglik o'lchov birliklari bilan ifodalanadi, masalan: px, em, %, vw, vh va boshqalar. O'lchov birliklari elementning kattaligi va joylashuviga ta'sir qiladi.
+</p>
+<p style="color: rgb(0, 255, 21);">
+	width: 200px; - elementning kengligini 200 pikselga o'rnatadi. Bu elementning gorizontal o'lchamini belgilaydi.
+	height: 100px; - elementning balandligini 100 pikselga o'rnatadi. Bu elementning vertikal o'lchamini belgilaydi.
+</p>
+<p>
+	width: 50%; - elementning kengligini uning ota elementining kengligining 50% ga o'rnatadi. Bu elementning gorizontal o'lchamini ota elementiga nisbatan belgilaydi.
+	height: 50%; - elementning balandligini uning ota elementining balandligining 50% ga o'rnatadi. Bu elementning vertikal o'lchamini ota elementiga nisbatan belgilaydi.
+</p>
+<p>
+	width: auto; - elementning kengligini avtomatik ravishda o'z tarkibiga moslashtiradi. Bu elementning gorizontal o'lchamini uning tarkibiga qarab belgilaydi.
+	height: auto; - elementning balandligini avtomatik ravishda o'z tarkibiga moslashtiradi. Bu elementning vertikal o'lchamini uning tarkibiga qarab belgilaydi.
+</p>
+<p>
+	width: inherit; - elementning kengligini uning ota elementining kengligini meros qilib oladi. Bu elementning gorizontal o'lchamini ota elementiga nisbatan belgilaydi.
+	height: inherit; - elementning balandligini uning ota elementining balandligini meros qilib oladi. Bu elementning vertikal o'lchamini ota elementiga nisbatan belgilaydi.
+</p>
+<p>
+	width: 100vw; - elementning kengligini brauzer oynasining kengligiga o'rnatadi. Bu elementning gorizontal o'lchamini brauzer oynasiga nisbatan belgilaydi.
+	height: 100vh; - elementning balandligini brauzer oynasining balandligiga o'rnatadi. Bu elementning vertikal o'lchamini brauzer oynasiga nisbatan belgilaydi.
+</p>
+<p>
+	width: 10em; - elementning kengligini uning o'zining shrifti o'lchamining 10 baravariga o'rnatadi. Bu elementning gorizontal o'lchamini uning shrifti o'lchamiga nisbatan belgilaydi.
+	height: 5em; - elementning balandligini uning o'zining shrifti o'lchamining 5 baravariga o'rnatadi. Bu elementning vertikal o'lchamini uning shrifti o'lchamiga nisbatan belgilaydi.
+</p>
+<p>
+	width: 0; - elementning kengligini 0 pikselga o'rnatadi, ya'ni element gorizontal ravishda ko'rinmaydi.
+	height: 0; - elementning balandligini 0 pikselga o'rnatadi, ya'ni element vertikal ravishda ko'rinmaydi.
+</p>
+<link rel="stylesheet" href="">
+</body>
+</html>

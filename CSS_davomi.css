@@ -1,0 +1,32 @@
+body {
+	background-color: hsl(71, 50%, 66%);
+	color: aliceblue;
+	padding: 0%;
+	margin: 0%;
+
+}
+.asos {
+	border: 2px solid rgb(33, 7, 151);
+	padding: 115px 25px;
+	 background-image:url(./2sardor.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+
+}
+.div1 {
+	border: 2px solid rgb(197, 13, 22);
+	padding: 115px 25px;
+	margin: 25px;
+	text-align: center;
+	background-image: url(./download.jpg);
+
+}
+.div2 {
+	border: 2px solid rgb(102, 255, 0);
+	padding: 65px 25px;
+  text-align: center;
+	margin: 30px;
+	background-image:url(./1.jpg) ;
+
+
+}
