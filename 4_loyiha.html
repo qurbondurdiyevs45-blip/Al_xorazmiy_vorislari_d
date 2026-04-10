@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktiv Quiz</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .app {
+            width: 380px;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        h2 { text-align: center; color: #1e3c72; }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #1e3c72;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .option {
+            padding: 12px;
+            background: #f0f2f5;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 2px solid transparent;
+            font-weight: 500;
+        }
+
+        /* To'g'ri javob stili */
+        .correct {
+            background: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+        }
+
+        /* Noto'g'ri javob stili */
+        .wrong {
+            background: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+
+        .hidden { display: none; }
+        
+        .question {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #scoreDisplay {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <div id="setupPage">
+        <h2>📝 Quiz Sozlamalari</h2>
+        <input id="username" type="text" placeholder="Ismingizni kiriting">
+        
+        <label>Mavzuni tanlang:</label>
+        <select id="category">
+            <option value="9">Umumiy bilimlar</option>
+            <option value="18">Kompyuter texnologiyalari</option>
+            <option value="21">Sport</option>
+            <option value="23">Tarix</option>
+            <option value="27">Hayvonot dunyosi</option>
+        </select>
+
+        <button onclick="startQuiz()">Boshlash</button>
+    </div>
+
+    <div id="quizPage" class="hidden">
+        <div id="quiz"></div>
+        <button id="nextBtn" class="hidden" onclick="nextQuestion()">Keyingi savol</button>
+        <p id="scoreDisplay"></p>
+    </div>
+</div>
+
+<script>
+    let questions = [];
+    let current = 0;
+    let score = 0;
+    let canClick = true;
+
+    async function startQuiz() {
+        const name = document.getElementById("username").value;
+        const cat = document.getElementById("category").value;
+
+        if (!name) { alert("Ismingizni kiriting!"); return; }
+
+        document.getElementById("setupPage").classList.add("hidden");
+        document.getElementById("quizPage").classList.remove("hidden");
+
+        // API orqali tanlangan mavzuda savollarni olish
+        const res = await fetch(`https://opentdb.com/api.php?amount=5&category=${cat}&type=multiple`);
+        const data = await res.json();
+
+        questions = data.results.map(q => {
+            let opts = [...q.incorrect_answers, q.correct_answer].sort(() => Math.random() - 0.5);
+            return {
+                question: decodeHtml(q.question),
+                options: opts.map(o => decodeHtml(o)),
+                answer: decodeHtml(q.correct_answer)
+            };
+        });
+
+        showQuestion();
+    }
+
+    function decodeHtml(html) {
+        let txt = document.createElement("textarea");
+        txt.innerHTML = html;
+        return txt.value;
+    }
+
+    function showQuestion() {
+        canClick = true;
+        document.getElementById("nextBtn").classList.add("hidden");
+        let q = questions[current];
+        
+        let html = `<div class="question">${current + 1}. ${q.question}</div>`;
+        q.options.forEach(opt => {
+            html += `<div class="option" onclick="checkAnswer(this, '${opt.replace(/'/g, "\\'")}')">${opt}</div>`;
+        });
+        
+        document.getElementById("quiz").innerHTML = html;
+    }
+
+    function checkAnswer(element, selected) {
+        if (!canClick) return;
+        canClick = false;
+
+        const correct = questions[current].answer;
+        
+        if (selected === correct) {
+            element.classList.add("correct");
+            score++;
+        } else {
+            element.classList.add("wrong");
+            // To'g'ri javobni ham ko'rsatib qo'yamiz
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => {
+                if (opt.innerText === correct) opt.classList.add("correct");
+            });
+        }
+
+        document.getElementById("nextBtn").classList.remove("hidden");
+    }
+
+    function nextQuestion() {
+        current++;
+        if (current < questions.length) {
+            showQuestion();
+        } else {
+            document.getElementById("quiz").innerHTML = "<h2>O'yin tugadi!</h2>";
+            document.getElementById("nextBtn").classList.add("hidden");
+            document.getElementById("scoreDisplay").innerHTML = `🏆 Natijangiz: ${score} / ${questions.length}<br><button onclick="location.reload()">Qayta boshlash</button>`;
+        }
+    }
+</script>
+
+</body>
+</html>
+
+
