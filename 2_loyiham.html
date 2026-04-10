@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>Kuchli Tarjimon</title>
+<style>
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    text-align: center;
+}
+
+.container {
+    margin-top: 40px;
+}
+
+textarea {
+    width: 320px;
+    height: 120px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+select, button {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+
+button {
+    background: #22c55e;
+    color: white;
+    cursor: pointer;
+}
+
+h1 {
+    color: #38bdf8;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌍 KUCHLI TARJIMON</h1>
+
+    <textarea id="inputText" placeholder="Matn kiriting..."></textarea>
+    <br>
+
+    <select id="fromLang">
+        <option value="uz">🇺🇿 Uzbek</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="ru">🇷🇺 Russian</option>
+        <option value="tr">🇹🇷 Turkish</option>
+    </select>
+
+    ➡️
+
+    <select id="toLang">
+        <option value="en">🇬🇧 English</option>
+        <option value="uz">🇺🇿 Uzbek</option>
+        <option value="ru">🇷🇺 Russian</option>
+        <option value="tr">🇹🇷 Turkish</option>
+    </select>
+
+    <br>
+
+    <button onclick="translateText()">🔁 Tarjima qilish</button>
+
+    <h3>Natija:</h3>
+    <textarea id="outputText" readonly></textarea>
+</div>
+
+<script>
+async function translateText() {
+    let text = document.getElementById("inputText").value;
+    let from = document.getElementById("fromLang").value;
+    let to = document.getElementById("toLang").value;
+
+    if (!text) {
+        alert("Matn kiriting!");
+        return;
+    }
+
+    let url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${from}|${to}`;
+
+    try {
+        let res = await fetch(url);
+        let data = await res.json();
+
+        document.getElementById("outputText").value = data.responseData.translatedText;
+    } catch (err) {
+        alert("Xatolik! Internetni tekshiring.");
+    }
+}
+</script>
+
+</body>
+</html>
